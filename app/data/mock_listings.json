@@ -1,0 +1,15 @@
+{
+  "Croma": [
+    {"name": "Apple iPhone 17 Pro 256GB", "price": 129900, "mrp": 134900,
+     "url": "https://www.croma.com/", "brand": "Apple", "availability": "instock",
+     "offer_text": "5% instant discount on select bank cards", "offer_type": "bank"}
+  ],
+  "Reliance Digital": [
+    {"name": "Apple iPhone 17 Pro 256GB", "price": 128990, "mrp": 134900,
+     "url": "https://www.reliancedigital.in/", "brand": "Apple", "availability": "instock"}
+  ],
+  "Vijay Sales": [
+    {"name": "Apple iPhone 17 Pro 256GB", "price": 128500, "mrp": 134900,
+     "url": "https://www.vijaysales.com/", "brand": "Apple", "availability": "instock"}
+  ]
+}

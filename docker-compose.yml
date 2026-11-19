@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: price_intelligence
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d price_intelligence"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  web:
+    build: .
+    ports: ["5000:5000"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/price_intelligence
+      SECRET_KEY: docker-development-key
+      ENABLE_LIVE_SCRAPING: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  postgres_data:

@@ -1,0 +1,12 @@
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+*.db
+!price_intelligence.db
+.pytest_cache/
+.coverage
+debug/
+instance/
+.vscode/

@@ -1,0 +1,21 @@
+from urllib.parse import quote_plus
+from bs4 import BeautifulSoup
+from app.scrapers.base import BaseScraper
+class RelianceDigitalScraper(BaseScraper):
+    source="Reliance Digital"; base_url="https://www.reliancedigital.in"
+    def search(self, query):
+        url=f"{self.base_url}/search?q={quote_plus(query)}"
+        html=self.fetch(url)
+        if not html: return []
+        results=self.parse_jsonld(html,query)
+        if results: return [r for r in results if r]
+        soup=BeautifulSoup(html,"html.parser"); out=[]
+        for card in soup.select('[class*="sp__product"], [class*="product-card"], [data-testid*="product"]'):
+            title=card.select_one('p, h3, h2, [class*="name"]')
+            price=card.select_one('[class*="price"], [class*="amount"]')
+            link=card.select_one('a[href]')
+            if not title or not price or not link: continue
+            href=link.get('href',''); href=href if href.startswith('http') else self.base_url+href
+            record=self.record(title.get_text(' ',strip=True),price.get_text(' ',strip=True),href,query)
+            if record: out.append(record)
+        return out[:20]
